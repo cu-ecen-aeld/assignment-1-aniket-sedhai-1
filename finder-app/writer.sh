@@ -1,10 +1,15 @@
-# Write a shell script writer.sh as described below
+#!/bin/bash
 
-#  Accepts the following arguments; the first argument is a full path to a file (including filename) on the filesystem,
-#  referred to below as writefile; the second argument is a text string which will be written within this file,
-#  referred to below as writestr
+if [ $# -ne 2 ]; then
+    echo "$# argument(s) provided."
+    echo "Provide the write directory and write string as two command line arguments."
+    exit 1
+fi
 
-#  Exits with value 1 error and print statements if any of the argument above were not specified
+mkdir -p $(dirname $1) && touch $1
+echo $2 > $1
 
-#  Creates a new file with name ane path writefile with content writestr, overwriting any existing file and creating
-#  the path if it does not exist. Exits with value 1 and error print statement if the file could not be created.
+if [ $? -ne 0 ]; then
+    echo "file creation failed"
+    exit 1
+fi
